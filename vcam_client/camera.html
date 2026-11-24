@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en" data-theme="__DEFAULT_THEME__">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="__PRODUCT_LOGO__" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>__PRODUCT_NAME__</title>
+    <script>
+      // Apply the saved theme before first paint (no flash of the default theme)
+      try { var t = localStorage.getItem("vcamx.theme"); if (t) document.documentElement.dataset.theme = t } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/camera-main.tsx"></script>
+  </body>
+</html>

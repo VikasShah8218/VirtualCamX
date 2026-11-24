@@ -1,0 +1,191 @@
+/*
+ * ===================================================================================
+ *  VirtualCamX THEME  -  the ONLY place where colors, radius and fonts are defined.
+ * ===================================================================================
+ *
+ *  Components never use hex codes; they use token classes such as bg-background,
+ *  text-foreground, bg-card, text-primary, bg-status-running, border-border.
+ *  So to restyle the whole app (Manager UI + Camera Web Page) you edit only this file.
+ *
+ *  - Change a theme:    edit the values in its block below.
+ *  - Default theme:     "defaultTheme" in branding.json (users can still switch in Settings).
+ *  - Add a theme:       copy a block, give it a new [data-theme="..."] name, then add it to
+ *                       THEMES in src/lib/theme.ts so it shows up in the theme picker.
+ *
+ *  Every theme must define every variable (same list in each block).
+ */
+
+/* ---- Dusk slate (default): soft dark, never pure black. Same palette as nvr_client. ---- */
+:root,
+[data-theme="dusk"] {
+  color-scheme: dark;
+  --background: #2e3440;
+  --foreground: #eceff4;
+  --card: #3b4252;
+  --card-foreground: #eceff4;
+  --popover: #3b4252;
+  --popover-foreground: #eceff4;
+  --primary: #88c0d0;
+  --primary-foreground: #242933;
+  --secondary: #434c5e;
+  --secondary-foreground: #eceff4;
+  --muted: #353c4a;
+  --muted-foreground: #a9b1c2;
+  --accent: #434c5e;
+  --accent-foreground: #eceff4;
+  --destructive: #bf616a;
+  --border: #4c566a;
+  --input: #4c566a;
+  --ring: #88c0d0;
+
+  --sidebar: #272c36;
+  --sidebar-foreground: #d8dee9;
+  --sidebar-primary: #88c0d0;
+  --sidebar-primary-foreground: #242933;
+  --sidebar-accent: #3b4252;
+  --sidebar-accent-foreground: #eceff4;
+  --sidebar-border: #3b4252;
+  --sidebar-ring: #88c0d0;
+
+  --chart-1: #88c0d0;
+  --chart-2: #a3be8c;
+  --chart-3: #ebcb8b;
+  --chart-4: #b48ead;
+  --chart-5: #d08770;
+
+  /* general status colors */
+  --success: #a3be8c;
+  --warning: #ebcb8b;
+  --info: #88c0d0;
+  --danger: #bf616a;
+
+  /* camera status colors (StatusBadge, list rows, tiles) */
+  --status-running: #a3be8c;
+  --status-starting: #ebcb8b;
+  --status-rebooting: #ebcb8b;
+  --status-offline: #d08770;
+  --status-error: #bf616a;
+  --status-stopped: #7b8394;
+  --status-fault: #b48ead;
+
+  /* video area behind players */
+  --video-bg: #1f232b;
+
+  --radius: 0.625rem;
+  --font-sans-family: "Geist Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-mono-family: "Geist Mono Variable", ui-monospace, "Cascadia Mono", Consolas, monospace;
+}
+
+/* ---- Midnight: deeper dark for control rooms with dimmed lights. ---- */
+[data-theme="midnight"] {
+  color-scheme: dark;
+  --background: #161a22;
+  --foreground: #e6e9ef;
+  --card: #1e232d;
+  --card-foreground: #e6e9ef;
+  --popover: #1e232d;
+  --popover-foreground: #e6e9ef;
+  --primary: #5fb3d9;
+  --primary-foreground: #0d1117;
+  --secondary: #272d39;
+  --secondary-foreground: #e6e9ef;
+  --muted: #1b2029;
+  --muted-foreground: #8d96a8;
+  --accent: #272d39;
+  --accent-foreground: #e6e9ef;
+  --destructive: #e06c75;
+  --border: #2d3442;
+  --input: #2d3442;
+  --ring: #5fb3d9;
+
+  --sidebar: #11141a;
+  --sidebar-foreground: #c9ced8;
+  --sidebar-primary: #5fb3d9;
+  --sidebar-primary-foreground: #0d1117;
+  --sidebar-accent: #1e232d;
+  --sidebar-accent-foreground: #e6e9ef;
+  --sidebar-border: #1e232d;
+  --sidebar-ring: #5fb3d9;
+
+  --chart-1: #5fb3d9;
+  --chart-2: #8fcf7a;
+  --chart-3: #e5c07b;
+  --chart-4: #c678dd;
+  --chart-5: #e28b5d;
+
+  --success: #8fcf7a;
+  --warning: #e5c07b;
+  --info: #5fb3d9;
+  --danger: #e06c75;
+
+  --status-running: #8fcf7a;
+  --status-starting: #e5c07b;
+  --status-rebooting: #e5c07b;
+  --status-offline: #e28b5d;
+  --status-error: #e06c75;
+  --status-stopped: #646c7c;
+  --status-fault: #c678dd;
+
+  --video-bg: #0b0d12;
+
+  --radius: 0.625rem;
+  --font-sans-family: "Geist Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-mono-family: "Geist Mono Variable", ui-monospace, "Cascadia Mono", Consolas, monospace;
+}
+
+/* ---- Daylight: light theme for bright offices and screenshots. ---- */
+[data-theme="daylight"] {
+  color-scheme: light;
+  --background: #f4f6f9;
+  --foreground: #1f2937;
+  --card: #ffffff;
+  --card-foreground: #1f2937;
+  --popover: #ffffff;
+  --popover-foreground: #1f2937;
+  --primary: #2b6f8f;
+  --primary-foreground: #ffffff;
+  --secondary: #e8ecf1;
+  --secondary-foreground: #1f2937;
+  --muted: #eef1f5;
+  --muted-foreground: #5f6b7a;
+  --accent: #e8ecf1;
+  --accent-foreground: #1f2937;
+  --destructive: #c2414b;
+  --border: #d5dbe3;
+  --input: #cfd6df;
+  --ring: #2b6f8f;
+
+  --sidebar: #e9edf2;
+  --sidebar-foreground: #2c3642;
+  --sidebar-primary: #2b6f8f;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #dbe2ea;
+  --sidebar-accent-foreground: #1f2937;
+  --sidebar-border: #d5dbe3;
+  --sidebar-ring: #2b6f8f;
+
+  --chart-1: #2b6f8f;
+  --chart-2: #4f8a3b;
+  --chart-3: #b7862a;
+  --chart-4: #8a5aa3;
+  --chart-5: #c0662f;
+
+  --success: #3f8a3a;
+  --warning: #b7862a;
+  --info: #2b6f8f;
+  --danger: #c2414b;
+
+  --status-running: #3f8a3a;
+  --status-starting: #b7862a;
+  --status-rebooting: #b7862a;
+  --status-offline: #c0662f;
+  --status-error: #c2414b;
+  --status-stopped: #8a94a3;
+  --status-fault: #8a5aa3;
+
+  --video-bg: #1f232b;
+
+  --radius: 0.625rem;
+  --font-sans-family: "Geist Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-mono-family: "Geist Mono Variable", ui-monospace, "Cascadia Mono", Consolas, monospace;
+}
