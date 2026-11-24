@@ -1,0 +1,18 @@
+fastapi
+uvicorn[standard]
+pydantic>=2
+pydantic-settings
+tortoise-orm>=1.1
+lxml
+httpx
+pyzmq
+psutil
+tzdata                         # Windows has no system tz database (Tortoise needs it)
+PyJWT
+argon2-cffi
+cryptography
+python-multipart
+# tests
+pytest
+pytest-asyncio
+onvif-zeep

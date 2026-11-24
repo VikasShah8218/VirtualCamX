@@ -1,0 +1,37 @@
+# vcam_server (Python / FastAPI)
+
+# ---- Python ---------------------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+
+# ---- Virtual envs (if created inside the project) --------------------------------------
+.venv/
+venv/
+env/
+
+# ---- Tests / tooling ------------------------------------------------------------------
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+
+# ---- Config: keep the template, ignore the real one ------------------------------------
+.env
+!.env.example
+
+# ---- Runtime data: database, logs, snapshots, caches, generated mediamtx.yml -----------
+data/
+
+# ---- Built web client (output of `npm run build` in vcam_client) -----------------------
+static/web/
+
+# ---- Third-party binaries: download them, don't commit them ----------------------------
+# (bin/mediamtx.yml and bin/LICENSE stay tracked)
+bin/*.exe
+bin/mediamtx
+bin/ffmpeg
+bin/ffprobe
