@@ -1,0 +1,55 @@
+# VirtualCamX - Docker Desktop (Windows / macOS) or any host where host networking is not wanted.
+#
+# Ports are published one by one, so:
+#   - HOST_IP must be set (the PC's LAN IP) - it is what NVRs are told to connect to;
+#   - only DOCKER_CAM_PORTS are available for cameras (default 8004-8063 = 60 cameras);
+#   - WS-Discovery is off (multicast does not cross Docker's NAT): add cameras on the NVR by IP:port;
+#   - RTSP is TCP only (NVRs switch to TCP automatically).
+#
+#   cd deploy
+#   docker compose -f docker-compose.bridge.yml --env-file ../vcam_server/.env up -d --build
+
+name: vcamx
+
+services:
+  vcamx:
+    image: ${VCAMX_IMAGE:-vcamx:latest}
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+    container_name: vcamx
+    restart: unless-stopped
+    init: true
+    stop_grace_period: 30s
+
+    env_file:
+      - path: ../vcam_server/.env
+        required: false
+    environment:
+      DATA_DIR: /data
+      BIN_DIR: /app/bin
+      MANAGER_HOST: 0.0.0.0
+      HOST_IP: ${HOST_IP:?Set HOST_IP in vcam_server/.env to this PC's LAN IP (e.g. 192.168.1.8)}
+      CAM_PORT_RANGE: ${DOCKER_CAM_PORTS:-8004-8063}
+      WSD_ENABLED: "false"
+      RTSP_TRANSPORTS: tcp            # UDP video cannot cross Docker Desktop's NAT
+
+    ports:
+      - "${MANAGER_PORT:-9000}:${MANAGER_PORT:-9000}"                       # Manager UI / API
+      - "${MEDIAMTX_RTSP_PORT:-8554}:${MEDIAMTX_RTSP_PORT:-8554}"           # RTSP (TCP)
+      - "${MEDIAMTX_WEBRTC_PORT:-8889}:${MEDIAMTX_WEBRTC_PORT:-8889}"       # WebRTC signaling
+      - "${MEDIAMTX_WEBRTC_UDP_PORT:-8189}:${MEDIAMTX_WEBRTC_UDP_PORT:-8189}/udp"  # WebRTC media
+      - "${DOCKER_CAM_PORTS:-8004-8063}:${DOCKER_CAM_PORTS:-8004-8063}"     # one port per camera (ONVIF)
+
+    volumes:
+      - vcamx-data:/data
+      - ${VCAMX_MEDIA_DIR:-./media}:/media:ro
+
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "5"
+
+volumes:
+  vcamx-data:

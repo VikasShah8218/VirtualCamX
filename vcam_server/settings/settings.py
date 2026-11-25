@@ -42,6 +42,7 @@ class VcamSettings(BaseSettings):
 
     # ---- Media --------------------------------------------------------------------------
     mediamtx_rtsp_port: int = 8554
+    rtsp_transports: str = "udp,multicast,tcp"  # "tcp" behind NAT (Docker bridge)
     mediamtx_webrtc_port: int = 8889
     mediamtx_webrtc_udp_port: int = 8189
     mediamtx_api_port: int = 9997

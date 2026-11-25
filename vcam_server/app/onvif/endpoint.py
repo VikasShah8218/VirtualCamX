@@ -10,6 +10,7 @@ from app.onvif import dispatcher, soap
 from app.onvif.dispatcher import Access, OnvifContext
 from app.onvif.faults import OnvifFault, action_failed, action_not_supported, not_authorized
 from app.onvif.security import AuthResult, digest_challenge, verify_http_auth, verify_wsse
+from settings.settings import settings
 
 logger = logging.getLogger("vcam.onvif")
 
@@ -38,7 +39,12 @@ def authenticate(request: Request, req: soap.SoapRequest, rt) -> AuthResult:
 
 
 def local_host(request: Request, rt) -> str:
-    """The camera IP as the client sees it (the local address the client connected to)."""
+    """The camera IP as the client sees it (the local address the client connected to).
+
+    An explicit HOST_IP wins: behind NAT (Docker bridge) the local address is the container's.
+    """
+    if settings.host_ip and rt.addr_mode == "port":
+        return rt.advertised_ip()
     server = request.scope.get("server")
     host = server[0] if server else None
     if not host or host in ("0.0.0.0", "::"):

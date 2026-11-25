@@ -32,6 +32,7 @@ password…), and watch every ONVIF request your NVR sends.
 - [Project layout](#project-layout)
 - [Requirements](#requirements)
 - [Getting started](#getting-started)
+- [Docker](#docker)
 - [Using it with an NVR](#using-it-with-an-nvr)
 - [Ports](#ports)
 - [Configuration](#configuration)
@@ -195,6 +196,7 @@ VirtualCamX/
 │   ├── VCAMX_FEATURE_SPEC.md   feature spec (what the product does)
 │   ├── CODING_STYLE.md         backend style
 │   └── REACT_CODING_STYLE.md   frontend style
+├── deploy/                   Dockerfile + docker compose (see deploy/README.md)
 ├── vcam_server/              backend (Python)
 │   ├── main.py                 entry point
 │   ├── settings/               all settings (from .env)
@@ -283,6 +285,25 @@ Press `Ctrl+C` to stop — all FFmpeg and MediaMTX processes stop with it.
 Check what the server found (FFmpeg features, MediaMTX, discovery):
 `http://<host>:9000/api/v1/system/health` — or **Settings → Server** in the UI.
 
+## Docker
+
+The easiest way to deploy: one image with the web UI, backend, MediaMTX and FFmpeg.
+It reads the **same `vcam_server/.env`** as a normal run.
+
+```bash
+cp vcam_server/.env.example vcam_server/.env   # set SECRET_KEY (and HOST_IP on Docker Desktop)
+cd deploy
+
+# Linux host (full features, incl. WS-Discovery)
+docker compose --env-file ../vcam_server/.env up -d --build
+
+# Windows / macOS - Docker Desktop
+docker compose -f docker-compose.bridge.yml --env-file ../vcam_server/.env up -d --build
+```
+
+Then open `http://<HOST_IP>:9000`. Full guide (bridge vs host network, footage, backups,
+troubleshooting): [`deploy/README.md`](deploy/README.md).
+
 ## Using it with an NVR
 
 1. In the Manager UI, create cameras (**Cameras → New camera** or **Bulk create**).
@@ -311,7 +332,7 @@ Change a camera's password: **Cameras → (camera) → Users → 🔑**. Each ca
 
 ## Configuration
 
-All server settings come from `vcam_server/.env` (template: `.env.example`). The important ones:
+All server settings come from `vcam_server/.env` (template: `.env.example`) — the same file is used by Docker. The important ones:
 
 | Setting | Default | Meaning |
 |---|---|---|
@@ -325,6 +346,7 @@ All server settings come from `vcam_server/.env` (template: `.env.example`). The
 | `X264_PRESET` | `veryfast` | encode speed vs. CPU |
 | `WSSEC_TIME_TOLERANCE_S` | `300` | WS-Security clock tolerance (`0` = don't check) |
 | `BIN_DIR` / `DATA_DIR` | `bin` / `data` | relative to `vcam_server/`, or absolute |
+| `RTSP_TRANSPORTS` | `udp,multicast,tcp` | RTSP transports offered (Docker bridge forces `tcp`) |
 
 Some settings (default camera login, reboot time, x264 preset, …) can also be changed live in
 **Settings → Runtime settings**.
@@ -402,4 +424,5 @@ The ONVIF smoke test (built on `onvif-zeep`, the same library many NVRs/tools us
 |---|---|
 | [`doc/VCAMX_FEATURE_SPEC.md`](doc/VCAMX_FEATURE_SPEC.md) | Full feature specification |
 | [`vcam_server/README.md`](vcam_server/README.md) | Backend quick reference and API examples |
+| [`deploy/README.md`](deploy/README.md) | Docker deployment guide |
 | `http://<host>:9000/docs` | Live REST API reference (Swagger) |

@@ -80,7 +80,7 @@ class MediaMtx:
             "pprof": False,
             "playback": False,
             "rtsp": True,
-            "rtspTransports": ["udp", "multicast", "tcp"],
+            "rtspTransports": [t.strip() for t in settings.rtsp_transports.split(",") if t.strip()],
             "rtspAddress": f":{settings.mediamtx_rtsp_port if port_mode else 554}",
             "rtspAuthMethods": ["basic", "digest"],
             "rtmp": False,
@@ -91,6 +91,8 @@ class MediaMtx:
             "webrtcAddress": f":{settings.mediamtx_webrtc_port}",
             "webrtcLocalUDPAddress": f":{settings.mediamtx_webrtc_udp_port}",
             "webrtcAllowOrigins": ["*"],
+            # Behind NAT (e.g. Docker bridge) the browser must be told the host's IP, not the container's
+            "webrtcAdditionalHosts": [settings.host_ip] if settings.host_ip else [],
             "pathDefaults": {"source": "publisher", "overridePublisher": True},
             "paths": {"all_others": {}},
         }

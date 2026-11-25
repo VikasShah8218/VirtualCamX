@@ -28,6 +28,9 @@ $RECYCLE.BIN/
 # ---- Local planning notes (not shared) ------------------------------------------------
 plan/
 
+# ---- Docker: local footage folder mounted into the container ---------------------------
+deploy/media/
+
 # ---- Logs / temp ----------------------------------------------------------------------
 *.log
 *.tmp

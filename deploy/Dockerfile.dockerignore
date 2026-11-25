@@ -1,0 +1,41 @@
+# Used automatically by BuildKit for deploy/Dockerfile (build context = repo root).
+# Keep the context small and never send secrets or local data to the build.
+
+**/.git
+**/.gitignore
+**/.vscode
+**/.idea
+**/.claude
+**/Thumbs.db
+**/.DS_Store
+
+# docs / planning / deployment files
+doc/
+plan/
+deploy/
+**/*.md
+
+# local env files and secrets (Docker gets its env from compose, not from the image)
+**/.env
+**/.env.*
+!vcam_client/.env.development
+**/*.pem
+**/*.key
+
+# Python
+**/__pycache__
+**/*.py[cod]
+**/.pytest_cache
+**/.venv
+**/venv
+vcam_server/data/
+vcam_server/static/web/
+vcam_server/bin/
+vcam_server/tests/
+
+# Node
+**/node_modules
+vcam_client/dist/
+vcam_client/coverage/
+vcam_client/test-results/
+vcam_client/playwright-report/

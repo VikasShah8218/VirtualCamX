@@ -1,0 +1,47 @@
+# VirtualCamX - recommended deployment (Linux host).
+#
+# Uses the HOST network so the virtual cameras behave exactly like real ones on your LAN:
+# WS-Discovery multicast ("Search devices" on the NVR), one port per camera, RTSP/UDP and WebRTC
+# all work with no port mapping.
+#
+#   cd deploy
+#   docker compose --env-file ../vcam_server/.env up -d --build
+#
+# Windows / macOS (Docker Desktop): use docker-compose.bridge.yml instead (see deploy/README.md).
+
+name: vcamx
+
+services:
+  vcamx:
+    image: ${VCAMX_IMAGE:-vcamx:latest}
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+    container_name: vcamx
+    restart: unless-stopped
+    init: true                      # reaps FFmpeg/MediaMTX children cleanly
+    network_mode: host
+    stop_grace_period: 30s          # time to stop every camera's FFmpeg gracefully
+
+    # The SAME settings file the server uses when run without Docker.
+    env_file:
+      - path: ../vcam_server/.env
+        required: false             # without it the built-in defaults are used
+    # Container paths always win over whatever the shared .env says
+    environment:
+      DATA_DIR: /data
+      BIN_DIR: /app/bin
+      MANAGER_HOST: 0.0.0.0
+
+    volumes:
+      - vcamx-data:/data                              # database, logs, snapshots, caches
+      - ${VCAMX_MEDIA_DIR:-./media}:/media:ro          # your footage: use /media/... paths in the UI
+
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "5"
+
+volumes:
+  vcamx-data:
