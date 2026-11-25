@@ -43,6 +43,8 @@ class VcamSettings(BaseSettings):
     # ---- Media --------------------------------------------------------------------------
     mediamtx_rtsp_port: int = 8554
     rtsp_transports: str = "udp,multicast,tcp"  # "tcp" behind NAT (Docker bridge)
+    mediamtx_rtp_port: int = 8000  # RTSP over UDP: RTP on this port, RTCP on +1 (UDP)
+    mediamtx_multicast_port: int = 8002  # RTSP multicast: RTP on this port, RTCP on +1 (UDP)
     mediamtx_webrtc_port: int = 8889
     mediamtx_webrtc_udp_port: int = 8189
     mediamtx_api_port: int = 9997
@@ -82,7 +84,9 @@ class VcamSettings(BaseSettings):
             self.mediamtx_rtsp_port,
             self.mediamtx_webrtc_port,
             self.mediamtx_api_port,
-            8000, 8001, 8002, 8003,  # MediaMTX RTP/RTCP/multicast (UDP, kept free to avoid confusion)
+            # MediaMTX RTP/RTCP/multicast (UDP, kept free to avoid confusion)
+            self.mediamtx_rtp_port, self.mediamtx_rtp_port + 1,
+            self.mediamtx_multicast_port, self.mediamtx_multicast_port + 1,
             8322,  # RTSPS
         }
 

@@ -131,6 +131,7 @@ docker buildx build -f deploy/Dockerfile --platform linux/amd64,linux/arm64 -t <
 | Symptom | Fix |
 |---|---|
 | `Set HOST_IP in vcam_server/.env…` | bridge mode needs `HOST_IP`, and `--env-file ../vcam_server/.env` |
+| `listen udp :8000: bind` | another MediaMTX (e.g. an NVR's) runs on this PC: set `MEDIAMTX_RTP_PORT`, `MEDIAMTX_RTSP_PORT`, `MEDIAMTX_WEBRTC_PORT`, `MEDIAMTX_WEBRTC_UDP_PORT`, `MEDIAMTX_API_PORT` to free ports |
 | `port is already allocated` / `WinError 10048` | VirtualCamX is already running locally (or another app uses the port) - stop it first |
 | NVR finds no cameras | bridge mode has no discovery: add by `IP:port`. Host mode: check the firewall allows UDP 3702 |
 | NVR adds the camera but shows no video | in bridge mode make sure the NVR can use RTSP over TCP |

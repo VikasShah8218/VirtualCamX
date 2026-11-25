@@ -347,6 +347,7 @@ All server settings come from `vcam_server/.env` (template: `.env.example`) — 
 | `WSSEC_TIME_TOLERANCE_S` | `300` | WS-Security clock tolerance (`0` = don't check) |
 | `BIN_DIR` / `DATA_DIR` | `bin` / `data` | relative to `vcam_server/`, or absolute |
 | `RTSP_TRANSPORTS` | `udp,multicast,tcp` | RTSP transports offered (Docker bridge forces `tcp`) |
+| `MEDIAMTX_RTP_PORT` / `MEDIAMTX_MULTICAST_PORT` | `8000` / `8002` | UDP ports for RTSP over UDP / multicast (RTCP = +1). Change them if another MediaMTX (e.g. an NVR's) runs on the same PC |
 
 Some settings (default camera login, reboot time, x264 preset, …) can also be changed live in
 **Settings → Runtime settings**.
