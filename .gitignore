@@ -1,0 +1,35 @@
+# VirtualCamX - repo-wide ignores.
+# Server- and client-specific rules live in vcam_server/.gitignore and vcam_client/.gitignore.
+
+# ---- OS -------------------------------------------------------------------------------
+.DS_Store
+Thumbs.db
+desktop.ini
+$RECYCLE.BIN/
+
+# ---- Editors / IDEs -------------------------------------------------------------------
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+.idea/
+*.swp
+*.swo
+*~
+
+# ---- Local secrets (any folder) -------------------------------------------------------
+.env
+.env.*.local
+*.pem
+*.key
+
+# ---- Claude Code local settings -------------------------------------------------------
+.claude/settings.local.json
+
+# ---- Local planning notes (not shared) ------------------------------------------------
+plan/
+
+# ---- Logs / temp ----------------------------------------------------------------------
+*.log
+*.tmp
+tmp/
+temp/
